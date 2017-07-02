@@ -1,115 +1,111 @@
 <?xml version='1.0' encoding='utf-8'?>
-<gexf xmlns:viz="http://www.gexf.net/1.1draft/viz" version="1.1" xmlns="http://www.gexf.net/1.1draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance">
-  <graph defaultedgetype="undirected" mode="static" name="">
-    <meta>
-      <creator>NetworkX 2.0.dev_20170702172618</creator>
-      <lastmodified>02/07/2017</lastmodified>
-    </meta>
+<gexf xmlns:ns0="http://www.gexf.net/1.1draft/viz" version="1.1" xmlns="http://www.gexf.net/1.1draft" xmlns:viz="http://www.gexf.net/1.1draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance">
+  <graph defaultedgetype="undirected" mode="static">
     <nodes>
       <node id="0" label="りんご">
-        <viz:size value="95" />
+        <ns0:size value="95" />
       </node>
       <node id="1" label="Network">
-        <viz:size value="14" />
+        <ns0:size value="14" />
       </node>
-      <node id="2" label="占有">
-        <viz:size value="77" />
+      <node id="2" label="占">
+        <ns0:size value="77" />
       </node>
       <node id="3" label="サーバ">
-        <viz:size value="112" />
+        <ns0:size value="112" />
       </node>
       <node id="4" label="酒">
-        <viz:size value="21" />
+        <ns0:size value="21" />
       </node>
       <node id="5" label="セット">
-        <viz:size value="35" />
+        <ns0:size value="35" />
       </node>
       <node id="6" label="パイン">
-        <viz:size value="70" />
+        <ns0:size value="70" />
       </node>
       <node id="7" label="プロデューサー">
-        <viz:size value="7" />
+        <ns0:size value="7" />
       </node>
       <node id="8" label="その他">
-        <viz:size value="73" />
+        <ns0:size value="73" />
       </node>
-      <node id="9" label="NFS">
-        <viz:size value="27" />
+      <node id="9" label="HDD">
+        <ns0:size value="27" />
       </node>
       <node id="10" label="CIFS">
-        <viz:size value="12" />
+        <ns0:size value="12" />
       </node>
       <node id="11" label="ぐぬり">
-        <viz:size value="9" />
+        <ns0:size value="9" />
       </node>
-      <node id="12" label="解約">
-        <viz:size value="5" />
+      <node id="12" label="サヨナラ">
+        <ns0:size value="5" />
       </node>
       <node id="13" label="グローバル">
-        <viz:size value="11" />
+        <ns0:size value="11" />
       </node>
-      <node id="14" label="調査">
-        <viz:size value="37" />
+      <node id="14" label="Search">
+        <ns0:size value="37" />
       </node>
       <node id="15" label="らっぱ">
-        <viz:size value="10" />
+        <ns0:size value="10" />
       </node>
       <node id="16" label="ギガント">
-        <viz:size value="4" />
+        <ns0:size value="4" />
       </node>
       <node id="17" label="システム">
-        <viz:size value="30" />
+        <ns0:size value="30" />
       </node>
       <node id="18" label="ぺぺぺ">
-        <viz:size value="15" />
+        <ns0:size value="15" />
       </node>
       <node id="19" label="Storage">
-        <viz:size value="5" />
+        <ns0:size value="5" />
       </node>
       <node id="20" label="申し込み">
-        <viz:size value="18" />
+        <ns0:size value="18" />
       </node>
       <node id="21" label="時間">
-        <viz:size value="15" />
+        <ns0:size value="15" />
       </node>
       <node id="22" label="ぐぬぬ">
-        <viz:size value="6" />
+        <ns0:size value="6" />
       </node>
-      <node id="23" label="インターネット接続">
-        <viz:size value="2" />
+      <node id="23" label="インターネット">
+        <ns0:size value="2" />
       </node>
       <node id="24" label="魚">
-        <viz:size value="4" />
+        <ns0:size value="4" />
       </node>
-      <node id="25" label="データストア">
-        <viz:size value="24" />
+      <node id="25" label="データ">
+        <ns0:size value="24" />
       </node>
       <node id="26" label="ST">
-        <viz:size value="7" />
+        <ns0:size value="7" />
       </node>
       <node id="27" label="請求">
-        <viz:size value="2" />
+        <ns0:size value="2" />
       </node>
       <node id="28" label="製品">
-        <viz:size value="12" />
+        <ns0:size value="12" />
       </node>
-      <node id="29" label="リモートアクセス">
-        <viz:size value="4" />
+      <node id="29" label="リゾート">
+        <ns0:size value="4" />
       </node>
       <node id="30" label="ごりら">
-        <viz:size value="4" />
+        <ns0:size value="4" />
       </node>
       <node id="31" label="プリン">
-        <viz:size value="7" />
+        <ns0:size value="7" />
       </node>
       <node id="32" label="魚心">
-        <viz:size value="4" />
+        <ns0:size value="4" />
       </node>
       <node id="33" label="天秤座">
-        <viz:size value="1" />
+        <ns0:size value="1" />
       </node>
       <node id="34" label="センター">
-        <viz:size value="1" />
+        <ns0:size value="1" />
       </node>
     </nodes>
     <edges>
@@ -179,8 +175,8 @@
       <edge id="63" source="6" target="28" weight="1" />
       <edge id="64" source="6" target="29" weight="2" />
       <edge id="65" source="6" target="34" weight="1" />
-      <edge id="66" source="7" target="20" weight="2" />
-      <edge id="67" source="7" target="18" weight="1" />
+      <edge id="66" source="7" target="18" weight="1" />
+      <edge id="67" source="7" target="20" weight="2" />
       <edge id="68" source="8" target="9" weight="1" />
       <edge id="69" source="8" target="25" weight="16" />
       <edge id="70" source="9" target="10" weight="6" />
