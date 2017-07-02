@@ -1,70 +1,114 @@
 # -*- coding: utf-8 -*-
 import sys
+import itertools
 import pandas as pd
+import networkx as nx
+from collections import Counter
 
 
 # DataFrameの作成
-def make_df(file):
+def makeDataFrame(file):
     df = pd.read_csv(file)
     df = df.sort_values("id").reset_index(drop=True)
     return df
 
 
-#ユニークな要素を抽出
-def makeDataFrameNode(df):
-    uniq_df = df.item.unique()
-    # print uniq_df
+# gfをいれて、ノードのラベルに合致するidを返す
+def convertNodeLabelToID(gf, nodelabel):
+    gf_nodelist = gf.nodes(data=True)
+    for node in gf_nodelist:
+        if nodelabel == node[1]['label']:
+            return node[0]
+
+
+# gfをいれて、ノードのIDに合致するラベルを返す
+def convertNodeIDToLabel(gf, nodeid):
+    gf_nodelist = gf.nodes(data=True)
+    for node in gf_nodelist:
+        if nodeid == node[0]:
+            return node[1]['label']
+
+
+# dfをいれて、ノードIDを作成する
+def makeNodeIDLists(df, gf, list_node):
+    list_id = []
+    for label in list_node:
+        list_id.append(convertNodeLabelToID(gf, label))
+    return list_id
+
+
+# dfをいれて、ノードのリストを作成する
+def makeNodeLists(df):
     list_node = []
-    list_size = []
-    for i in uniq_df:
-        size = df[df['item'] == i].item.count()
+    for i in df.item.unique():
         list_node.append(i)
+    return list_node
+
+
+# dfをいれて、ノードのサイズを作成する
+def makeNodeSizeLists(df):
+    list_size = []
+    for i in df.item.unique():
+        size = df[df['item'] == i].item.count()
         list_size.append(size)
-    node = pd.DataFrame(columns=['node', 'size'])
-    node = pd.DataFrame({'node': list_node, 'size': list_size})
-    return node
+    return list_size
 
 
-def printNodeXEXF(df):
-    header = '''
-<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:viz="http://www.gexf.net/1.1draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
-<graph>
-<nodes>
-'''
-    footer = '''
-</nodes>
-</graph>
-</gexf>
-'''
-    print header
-    print footer
-#    for item in df.node:
-#        print '<node id="a" label="' + item + '">'
-#        print '<viz:size value="' + size + '"/>'
-    print df
-    for i in df.iterrows():
-        node = df.node.ix[i]
-        print node
+# DFからユニーク要素を抽出して、networkxのノード情報を作成
+def makeNodes(df):
+    list_node = makeNodeLists(df)
+    list_size = makeNodeSizeLists(df)
+    df_node = pd.DataFrame(columns=['node', 'size'])
+    df_node = pd.DataFrame({'node': list_node, 'size': list_size})
+    gf = nx.Graph()
+    for index, row in df_node.iterrows():
+        gf.add_node(index, label=row['node'])
+        gf.node[index]['viz'] = {'size': row['size']}
+    return gf
 
 
-# idにマッチするitemを表示
-def search_data(df, uniqids):
-    for i in uniqids:
-        str = ""
-        count = 0
-        for d in df.item[(df.id == i)]:
-            count += 1
-            if count > 1:
-                str += ","
-            str += "\"" + d + "\""
-        print str
+# DF からエッジ情報を抽出して、networkxのエッジ情報を作成
+def makeEdges(df, gf):
+    list_edges = []
+    for i in df.id.unique():
+        list_trans = []
+        if df[df['id'] == i].item.count() > 1:
+            for index, row in df[df['id'] == i].iterrows():
+                list_trans.append(row['item'])
+            # 順列を要素2までで作成
+            list_permutations = list(itertools.permutations(list_trans, 2))
+            for permutation in list_permutations:
+                list_edges.append(permutation)
+    counter = Counter(list_edges)
+    for edge, cnt in counter.most_common():
+        id_src = convertNodeLabelToID(gf, edge[0])
+        id_dst = convertNodeLabelToID(gf, edge[1])
+        gf.add_edge(id_src, id_dst, weight=cnt)
+    return gf
+
+
+def outputGEXF(df, gf):
+    nx.write_gexf(gf, 'temp.gexf', encoding='utf-8')
+    list_id = makeNodeIDLists(df, gf, makeNodeLists(df))
+    with open('temp.gexf') as lines:
+        for line in lines:
+            text = line.rstrip('\r\n')
+            for i in list_id:
+                elem = '      <node id="' + str(i) + '"'
+                if elem in text:
+                    label = convertNodeIDToLabel(gf, i)
+                    replace_elem = elem + ' label="' + str(label) + '">'
+                    text = replace_elem
+                    break
+            print text
 
 
 # main
 def main():
-    df = make_df(argvs[1])
-    df_node = makeDataFrameNode(df)
-    printNodeXEXF(df_node)
+    df = makeDataFrame(argvs[1])
+    gf_node = makeNodes(df)
+    gf = makeEdges(df, gf_node)
+    outputGEXF(df, gf)
 
 
 if __name__ == '__main__':
